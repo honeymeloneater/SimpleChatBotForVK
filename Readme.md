@@ -19,7 +19,7 @@ Then ngrock successfully started, you need to confirm your server for VK. Again,
 
 Congratulations, you successfully configured your project!
 
-#Technologies
+# Technologies
 
 1. Spring Boot
 2. Spring MVC
