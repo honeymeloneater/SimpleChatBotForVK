@@ -1,0 +1,28 @@
+{
+  "properties": [
+    {
+      "name": "vk.api.version",
+      "type": "java.lang.String",
+      "description": "Description for vk.api."
+    },
+    {
+      "name": "vk.api.url.sendmsg",
+      "type": "java.lang.String",
+      "description": "Description for vk.url.api."
+    },
+    {
+      "name": "vk.api.token",
+      "type": "java.lang.String",
+      "description": "Description for vk.token."
+    },
+    {
+      "name": "vk.api.confirm.code",
+      "type": "java.lang.String",
+      "description": "Description for vk.confirm.code."
+    },
+    {
+      "name": "vk.api.url",
+      "type": "java.lang.String",
+      "description": "Description for vk.api.url."
+    }
+  ] }

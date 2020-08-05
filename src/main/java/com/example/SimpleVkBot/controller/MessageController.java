@@ -3,28 +3,38 @@ package com.example.SimpleVkBot.controller;
 
 import com.example.SimpleVkBot.model.VkMessage;
 import com.example.SimpleVkBot.service.MessageService;
-import com.example.SimpleVkBot.utils.Constants;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 
 @Controller
-@AllArgsConstructor
 public class MessageController {
-    MessageService messageService;
+
+    private final MessageService messageService;
+
+    @Value("${vk.api.confirm.code}")
+    private  String confirmCode;
+
+    public MessageController(MessageService messageService) {
+        this.messageService = messageService;
+    }
+
     @RequestMapping(value = "/", method = RequestMethod.POST, consumes = {"application/json"})
     @ResponseStatus(HttpStatus.OK)
     public @ResponseBody
-    String doChatBotResponse(@RequestBody String incomingMessage){
+    String doChatBotResponse(@RequestBody(required=false)  String incomingMessage){
         Gson gson = new Gson();
         if(incomingMessage != null)
             if(gson.fromJson(incomingMessage, JsonObject.class).get("type").toString().equals("\"message_new\""))
                 messageService.sendMessage(new Gson().fromJson(incomingMessage, VkMessage.class));
-            else return Constants.confirmCode;
+            else return confirmCode;
         return "Ok";
     }
 }
