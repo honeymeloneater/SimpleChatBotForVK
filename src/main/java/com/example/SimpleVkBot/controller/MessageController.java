@@ -18,22 +18,23 @@ import org.springframework.web.bind.annotation.*;
 public class MessageController {
 
     private final MessageService messageService;
+    private final Gson gson;
 
     @Value("${vk.api.confirm.code}")
     private  String confirmCode;
 
-    public MessageController(MessageService messageService) {
+    public MessageController(MessageService messageService, Gson gson) {
         this.messageService = messageService;
+        this.gson = gson;
     }
 
     @RequestMapping(value = "/", method = RequestMethod.POST, consumes = {"application/json"})
     @ResponseStatus(HttpStatus.OK)
     public @ResponseBody
     String doChatBotResponse(@RequestBody(required=false)  String incomingMessage){
-        Gson gson = new Gson();
         if(incomingMessage != null)
             if(gson.fromJson(incomingMessage, JsonObject.class).get("type").toString().equals("\"message_new\""))
-                messageService.sendMessage(new Gson().fromJson(incomingMessage, VkMessage.class));
+                messageService.sendMessage(gson.fromJson(incomingMessage, VkMessage.class));
             else return confirmCode;
         return "Ok";
     }
